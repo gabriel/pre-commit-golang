@@ -6,6 +6,6 @@ set -e
 
 exec 5>&1
 for file in "$@"; do
-    output="$(golint "$file" 2>&1 | tee /dev/fd/5)"
+    output="$(golint "$file" 2>&1 | grep -v ^vendor | grep -v ^protocol | grep -v comment | grep -v KeysById | grep -v "error should be the last type" | grep -v stutters | grep -v "error strings should not be capitalized" | tee /dev/fd/5)"
     [[ -z "$output" ]]
 done
